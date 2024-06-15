@@ -15,5 +15,9 @@ class Product(models.Model):
 
     order = models.ManyToManyField('Order', through='OrderProduct')
 
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'debug_toolbar',
     'django_extensions',
+    "django_filters",
 
     # Local apps
     'products',
@@ -145,4 +146,6 @@ REST_FRAMEWORK = {
 
 
     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
 }
