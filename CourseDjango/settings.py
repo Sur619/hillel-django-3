@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-z1t77&gxlv7-1)8vx024w(2klbe(b@+pb42ccq@aepr*pbph)^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['2625-188-163-73-16.ngrok-free.app', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -131,6 +131,11 @@ STATIC_URL = 'static/'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://2625-188-163-73-16.ngrok-free.app',
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-token = os.environ['TELEGRAM_BOT_TOKEN']
+token = os.environ.get('TELEGRAM_BOT_TOKEN')
 
 
 def send_message(chat_id, text):

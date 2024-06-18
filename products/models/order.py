@@ -8,6 +8,7 @@ from products.models import Product
 
 from telegram.client import send_message
 
+
 class Order(models.Model):
     uuid = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -16,6 +17,7 @@ class Order(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     @property
     def total_price(self):
         total_price = 0
@@ -28,5 +30,9 @@ class Order(models.Model):
 def send_order_telegram_message(sender, instance, created, **kwargs):
     if created:
         chat_id = 980106016
-        text = f"new order {instance.uuid} created"
+
+        order_products = instance.order_products.all()
+        text = f"new order {instance.uuid} created\n"
+        for order_product in order_products:
+            text += f"{order_product.product.title} - {order_product.quantity} - {order_product.price}\n"
         send_message(chat_id, text)

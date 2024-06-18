@@ -20,15 +20,18 @@ from rest_framework.routers import DefaultRouter
 
 from products.views import products_view
 from products.viewsets import ProductViewSet, OrderViewSet, RecipeViewSet
+from telegram.views import telegram
 
 router = DefaultRouter()
 router.register('products', ProductViewSet)
 router.register('orders', OrderViewSet)
 router.register('recipes', RecipeViewSet)
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
+    path('telegram/', telegram)
 
 ]
