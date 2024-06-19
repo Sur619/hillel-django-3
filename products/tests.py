@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from products.models import Product
+from products.models import Product, order, order_product, Order
+from telegram.client import send_message
 
 
 class ProductTestCase(TestCase):

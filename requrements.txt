@@ -6,3 +6,5 @@ Faker==25.8.0
 django-debug-toolbar==4.4.2
 uuid==1.30
 django_filter==24.2
+celery==5.4.0
+django-celery-beat==2.6.0

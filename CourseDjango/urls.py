@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from products.views import products_view
+from products.views import products_view, celery_view
 from products.viewsets import ProductViewSet, OrderViewSet, RecipeViewSet
 from telegram.views import telegram
 
@@ -32,6 +32,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
-    path('telegram/', telegram)
+    path('telegram/', telegram),
+    path('celery/', celery_view)
 
 ]

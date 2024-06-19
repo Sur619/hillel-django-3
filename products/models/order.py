@@ -1,12 +1,8 @@
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 from products.models import Product
-
-from telegram.client import send_message
 
 
 class Order(models.Model):
@@ -24,15 +20,3 @@ class Order(models.Model):
         for order_product in self.order_products.all():
             total_price += order_product.price
         return total_price
-
-
-@receiver(post_save, sender=Order)
-def send_order_telegram_message(sender, instance, created, **kwargs):
-    if created:
-        chat_id = 980106016
-
-        order_products = instance.order_products.all()
-        text = f"new order {instance.uuid} created\n"
-        for order_product in order_products:
-            text += f"{order_product.product.title} - {order_product.quantity} - {order_product.price}\n"
-        send_message(chat_id, text)
