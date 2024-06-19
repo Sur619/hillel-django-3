@@ -11,12 +11,18 @@ from rest_framework.response import Response
 @authentication_classes([])
 @permission_classes([])
 def telegram(request):
-    try:
-        data = request.data
-        chat_id = data['message']['chat']['id']
-        text = data['message']['text']
-        send_message(980106016, text)
-        return Response(status=200)
-    except Exception as e:
-        print(e)
-        return Response(status=400)
+    # Telegram webhook view
+    # Get telegram message
+    # Echo message
+    print(request.data)
+
+    text = request.data['message']['text']
+    name = request.data['message']['from'].get('first_name')
+
+    telegram_text = f"{name}: {text}"
+
+    send_message(192484569, telegram_text)
+
+    # Some comment
+
+    return Response({'status': 'OK!'})

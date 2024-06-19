@@ -16,4 +16,4 @@ def send_order_telegram_message(sender, instance: Order, created, **kwargs):
     #         text += f"{order_product.product.title} - {order_product.quantity} - {order_product.price}\n"
     #     send_message(chat_id, text)
     if created:
-        order_send_telegram_message.delay(instance.uuid)
+        order_send_telegram_message.apply_async((instance.uuid,), countdown=10)

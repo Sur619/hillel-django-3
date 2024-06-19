@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render
 from rest_framework import viewsets
-from .tasks import hello_world_task
+from .tasks import hello_world_task, daily_orders_count
 from .models import Product, Order
 
 
@@ -27,8 +27,11 @@ def products_view(request, *args, **kwargs):
 
 def celery_view(request, *args, **kwargs):
     hello_world_task.delay()
+
     return HttpResponse("OK")
 
 
-def celery_send_telegram_message(order_id):
-    pass
+def daily_order_count_view(request, *args, **kwargs):
+    daily_orders_count.delay()
+
+    return HttpResponse("OK")
