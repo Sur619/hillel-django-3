@@ -14,6 +14,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    display_number = models.IntegerField(blank=False, null=True, default=0)
     @property
     def total_price(self):
         total_price = 0

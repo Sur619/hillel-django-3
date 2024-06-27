@@ -3,7 +3,8 @@ from datetime import datetime, timedelta
 from celery import shared_task
 from django.db.models import Count
 
-from products.models import Order
+from google_sheets.api import write_to_sheet
+from products.models import Order, Product
 
 from telegram.client import send_message
 
@@ -36,12 +37,23 @@ def daily_orders_count():
 
     top_products_from_orders = Order.objects.filter(
         created_at__range=(datetime.today() - timedelta(days=1))
-        .values('product_id')
-        .annotate(count=Count('product_id'))
-        .order_by('-count')[:3]
+                          .values('product_id')
+                          .annotate(count=Count('product_id'))
+                          .order_by('-count')[:3]
     )
 
     print(f"{amount_of_orders} orders created by day\n")
     print(f"{top_products_from_orders} top 3 products from orders\n")
     for product in top_products_from_orders:
         print(f"{product['product_id']}")
+
+
+@shared_task
+def write_google_sheet_products_report():
+    products = Product.objects.all()
+    products_data = []
+
+    for product in products:
+        products_data.append([product.title, product.price, product.description, product.quantity])
+
+    write_to_sheet("A:C", products_data)

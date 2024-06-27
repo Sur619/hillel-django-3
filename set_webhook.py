@@ -6,7 +6,7 @@ load_dotenv()
 
 
 def set_webhook():
-    our_url = "https://5461-188-163-73-16.ngrok-free.app/telegram/"
+    our_url = "https://d154-88-155-179-254.ngrok-free.app/telegram/"
     telegram_url = f"https://api.telegram.org/bot{os.environ.get('TELEGRAM_BOT_TOKEN')}/setWebhook"
 
     data = {

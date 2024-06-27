@@ -1,0 +1,45 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "54322:5432"
+  redis:
+    image: "redis:latest"
+  web:
+    build:
+      context: .
+    image: hillel-django-web
+    ports:
+      - "8000:8000"
+    command: [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+    environment:
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - REDIS_HOST=redis
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    restart: always
+
+  migration:
+    build: .
+    image: hillel-django-web
+    command: ["python", "manage.py", "migrate"]
+    environment:
+      - DB_HOST=db
+      - DB_NAME=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    restart: on-failure
