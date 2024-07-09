@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
+from graphene_django.views import GraphQLView
 from CourseDjango.views import registration, obtain_auth_token
-from products.views import products_view, celery_view
+# from products.views import products_view, celery_view
 from products.viewsets import ProductViewSet, OrderViewSet, RecipeViewSet
 from telegram.views import telegram
 
@@ -34,8 +34,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path("__debug__/", include("debug_toolbar.urls")),
     path('telegram/', telegram),
-    path('celery/', celery_view),
+    # path('celery/', celery_view),
     path('api_registration/', registration),
     path('api_auth/', obtain_auth_token),
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
 
 ]
